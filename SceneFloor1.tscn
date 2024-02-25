@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://cb0r7qru3rspr"]
+
+[ext_resource type="Texture2D" uid="uid://b6fd5vcuvvw65" path="res://BuildingLayoutTexture.tres" id="1_i5x12"]
+[ext_resource type="Script" path="res://SceneFloor1.cs" id="1_p6x0j"]
+[ext_resource type="Script" path="res://EmployeeSimple.cs" id="3_ht8ui"]
+[ext_resource type="Script" path="res://EmployeeSimpleAnimation.cs" id="4_hhsve"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_elp8q"]
+radius = 3.22
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_p7751"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(-0.386292, 1.28931, 265.631, 463.997, -49.097, 643.576, -22.3182, 689.958, -96.1047, 732.559, -0.145325, 896.805, 72.7931, 854.693, 188.069, 1050.44, 578.591, 823.899, 692.482, 1017.24, 836.2, 933.2, 852.36, 961.189, 1104.25, 815.757, 890.483, 445.502, 785.316, 506.221, 737.298, 423.054, 769.527, 404.446, 442.253, -160.442, 294.68, -75.2393, 253.588, -146.411)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[node name="Node" type="Node"]
+script = ExtResource("1_p6x0j")
+
+[node name="FloorTexture" type="Sprite2D" parent="."]
+position = Vector2(1958, -337)
+rotation = 1.57079
+scale = Vector2(1.02111, 1.08295)
+texture = ExtResource("1_i5x12")
+centered = false
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="FloorTexture"]
+position = Vector2(910.773, 1224.43)
+rotation = -3.14159
+scale = Vector2(4.96, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorTexture/CharacterBody2D"]
+position = Vector2(2.40803e-05, 0)
+shape = SubResource("CircleShape2D_elp8q")
+one_way_collision_margin = 0.0
+debug_color = Color(0.905882, 0.0196078, 0.733333, 0.419608)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="FloorTexture/CharacterBody2D"]
+path_desired_distance = 44.73
+target_desired_distance = 52.4
+path_max_distance = 150.0
+debug_enabled = true
+script = ExtResource("3_ht8ui")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FloorTexture/CharacterBody2D"]
+speed_scale = 0.429
+script = ExtResource("4_hhsve")
+
+[node name="NavigationRegion2D2" type="NavigationRegion2D" parent="FloorTexture"]
+position = Vector2(798.153, 195.763)
+rotation = 0.523607
+scale = Vector2(1, 1)
+navigation_polygon = SubResource("NavigationPolygon_p7751")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="FloorTexture/NavigationRegion2D2"]
+position = Vector2(1093.16, 808.299)
+vertices = PackedVector2Array(0.225891, 6.26715, -243.185, 146.802, -332.68, -6.24762, -322.503, -12.1236, -238.161, 130.041, -12.9476, 1.07794, -52.579, -65.606, -39.0844, -75.5298, 6.54913, 1.55011)
